@@ -3,72 +3,719 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7b23b">
+    <meta
+      name="description"
+      content="Promesas de un verano: menu de chiringuito con sabor, calma y buenos momentos."
+    >
     <title>Promesas de un verano</title>
     <style>
       :root {
         color-scheme: light;
+        --ink: #18343c;
+        --muted: #5d6960;
+        --paper: #fffaf0;
+        --sun: #f7b23b;
+        --coral: #f06a4f;
+        --water: #13a8b8;
+        --deep-water: #08788a;
+        --leaf: #77a847;
+        --sand: #f2d797;
+        --shadow: rgba(24, 52, 60, 0.16);
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        color: #18212f;
-        background: #f6f0df;
+        color: var(--ink);
+        background: var(--paper);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 32px;
+        min-width: 320px;
+        overflow-x: hidden;
         background:
-          linear-gradient(135deg, rgba(248, 205, 112, 0.5), rgba(88, 167, 162, 0.28)),
-          #f6f0df;
+          radial-gradient(circle at 88% 8%, rgba(247, 178, 59, 0.34), transparent 24rem),
+          radial-gradient(circle at 8% 42%, rgba(19, 168, 184, 0.16), transparent 22rem),
+          linear-gradient(180deg, #fff2cc 0%, #fffaf0 40%, #e9fbfb 100%);
       }
 
-      main {
-        width: min(100%, 760px);
-      }
-
-      h1 {
-        margin: 0 0 16px;
-        font-size: clamp(2.4rem, 8vw, 5.2rem);
-        line-height: 0.96;
-        letter-spacing: 0;
-      }
-
-      p {
-        max-width: 56ch;
-        margin: 0 0 28px;
-        font-size: 1.15rem;
-        line-height: 1.65;
+      img {
+        display: block;
+        max-width: 100%;
       }
 
       a {
-        display: inline-flex;
-        align-items: center;
-        min-height: 44px;
-        padding: 0 18px;
-        border: 1px solid #18212f;
-        border-radius: 8px;
-        color: #18212f;
-        text-decoration: none;
-        font-weight: 700;
-        background: rgba(255, 255, 255, 0.45);
+        color: inherit;
       }
 
-      a:hover {
-        background: #18212f;
+      .nav {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px clamp(18px, 5vw, 58px);
         color: #fff;
+        background: linear-gradient(180deg, rgba(24, 52, 60, 0.46), transparent);
+      }
+
+      .brand {
+        font-weight: 950;
+        letter-spacing: 0;
+        text-shadow: 0 2px 22px rgba(0, 0, 0, 0.24);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 10px;
+      }
+
+      .nav a {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 14px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 850;
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(14px);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 94vh;
+        display: grid;
+        align-items: end;
+        padding: 112px clamp(18px, 5vw, 64px) 68px;
+        overflow: hidden;
+        color: #fff;
+        background:
+          linear-gradient(180deg, rgba(5, 76, 88, 0.08) 0%, rgba(5, 76, 88, 0.68) 74%, rgba(8, 120, 138, 0.96) 100%),
+          radial-gradient(circle at 16% 18%, #ffd76f 0 7.2rem, transparent 7.35rem),
+          linear-gradient(135deg, #f06a4f 0%, #f7b23b 34%, #27bdc6 68%, #08788a 100%);
+      }
+
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .hero::before {
+        width: 80vw;
+        height: 80vw;
+        min-width: 540px;
+        min-height: 540px;
+        right: -24vw;
+        bottom: -36vw;
+        border-radius: 50%;
+        background:
+          repeating-radial-gradient(circle at 52% 48%, rgba(255, 255, 255, 0.18) 0 2px, transparent 2px 22px),
+          radial-gradient(circle, rgba(19, 168, 184, 0.96), rgba(8, 120, 138, 0.3) 68%, transparent 69%);
+        animation: poolGlow 9s ease-in-out infinite alternate;
+      }
+
+      .hero::after {
+        inset: auto 0 0;
+        height: 120px;
+        background:
+          radial-gradient(52px 28px at 8% 44%, rgba(255, 255, 255, 0.64) 0 48%, transparent 51%),
+          radial-gradient(68px 30px at 24% 60%, rgba(255, 255, 255, 0.44) 0 48%, transparent 51%),
+          radial-gradient(58px 26px at 48% 52%, rgba(255, 255, 255, 0.5) 0 48%, transparent 51%),
+          radial-gradient(80px 34px at 77% 64%, rgba(255, 255, 255, 0.42) 0 48%, transparent 51%);
+        opacity: 0.9;
+        animation: shimmer 6s ease-in-out infinite;
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 2;
+        width: min(100%, 1160px);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 390px);
+        gap: clamp(28px, 6vw, 76px);
+        align-items: end;
+      }
+
+      .kicker {
+        margin: 0 0 14px;
+        font-size: 0.84rem;
+        font-weight: 950;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 860px;
+        margin: 0;
+        font-size: clamp(3rem, 11vw, 8.8rem);
+        line-height: 0.88;
+        letter-spacing: 0;
+        text-wrap: balance;
+        text-shadow: 0 16px 48px rgba(8, 48, 58, 0.36);
+      }
+
+      .hero-copy {
+        max-width: 650px;
+        margin: 24px 0 0;
+        font-size: clamp(1.08rem, 2vw, 1.35rem);
+        line-height: 1.65;
+        color: rgba(255, 255, 255, 0.93);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .button {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 950;
+        box-shadow: 0 16px 36px rgba(24, 52, 60, 0.21);
+        transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 44px rgba(24, 52, 60, 0.28);
+      }
+
+      .button.primary {
+        color: var(--ink);
+        background: #fff;
+      }
+
+      .button.secondary {
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.58);
+        background: rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(14px);
+      }
+
+      .stamp {
+        position: relative;
+        min-height: 430px;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        border-radius: 8px;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.18)),
+          linear-gradient(155deg, rgba(255, 215, 111, 0.95), rgba(240, 106, 79, 0.72) 48%, rgba(19, 168, 184, 0.84));
+        box-shadow: 0 30px 80px rgba(7, 66, 76, 0.35);
+        backdrop-filter: blur(16px);
+      }
+
+      .stamp::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 46%;
+        background:
+          linear-gradient(135deg, transparent 0 22px, rgba(255, 255, 255, 0.42) 22px 26px, transparent 26px 48px),
+          linear-gradient(180deg, rgba(18, 152, 170, 0.38), rgba(8, 120, 138, 0.86));
+        background-size: 62px 62px, auto;
+        animation: waterMove 8s linear infinite;
+      }
+
+      .stamp img {
+        position: relative;
+        z-index: 2;
+        width: min(100%, 330px);
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+        padding: 14px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.88);
+        mix-blend-mode: multiply;
+        filter: drop-shadow(0 18px 28px rgba(24, 52, 60, 0.14));
+      }
+
+      section {
+        padding: clamp(58px, 9vw, 112px) clamp(18px, 5vw, 64px);
+      }
+
+      .section-inner {
+        width: min(100%, 1120px);
+        margin: 0 auto;
+      }
+
+      .section-title {
+        max-width: 800px;
+        margin: 0 0 18px;
+        font-size: clamp(2rem, 5vw, 4.7rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+        text-wrap: balance;
+      }
+
+      .section-text {
+        max-width: 740px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.8;
+      }
+
+      .intro {
+        background:
+          linear-gradient(180deg, rgba(255, 250, 240, 0.74), rgba(255, 255, 255, 0.88)),
+          radial-gradient(circle at 8% 10%, rgba(240, 106, 79, 0.18), transparent 22rem);
+      }
+
+      .promise-row {
+        display: grid;
+        grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+        gap: clamp(28px, 6vw, 72px);
+        align-items: center;
+      }
+
+      .promise-art {
+        padding: 20px;
+        border-radius: 8px;
+        background:
+          radial-gradient(circle at 50% 44%, rgba(247, 178, 59, 0.26), transparent 15rem),
+          #fff;
+        box-shadow: 0 18px 50px rgba(24, 52, 60, 0.1);
+      }
+
+      .promise-art img {
+        mix-blend-mode: multiply;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0 14px;
+        border-radius: 999px;
+        color: #fff;
+        font-weight: 850;
+        background: var(--deep-water);
+      }
+
+      .pill:nth-child(2) {
+        background: var(--coral);
+      }
+
+      .pill:nth-child(3) {
+        background: var(--leaf);
+      }
+
+      .menu {
+        color: #fff;
+        background:
+          linear-gradient(180deg, rgba(8, 120, 138, 0.95), rgba(24, 52, 60, 0.97)),
+          repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 22px);
+      }
+
+      .menu .section-text {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .menu-layout {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 36px;
+      }
+
+      .menu-card {
+        min-height: 100%;
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+
+      .menu-card h3 {
+        margin: 0 0 18px;
+        color: #ffe9a8;
+        font-size: 1.45rem;
+        line-height: 1.1;
+      }
+
+      .menu-card ul {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .menu-card li {
+        display: flex;
+        gap: 14px;
+        justify-content: space-between;
+        align-items: baseline;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.45;
+      }
+
+      .menu-card span {
+        min-width: max-content;
+        color: #fff;
+        font-weight: 900;
+      }
+
+      .full-menu {
+        margin-top: 28px;
+      }
+
+      .pool-band {
+        position: relative;
+        min-height: 330px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        color: #fff;
+        text-align: center;
+        background:
+          linear-gradient(180deg, rgba(19, 168, 184, 0.3), rgba(8, 120, 138, 0.52)),
+          linear-gradient(120deg, #20b8c4, #08788a);
+      }
+
+      .pool-band::before {
+        content: "";
+        position: absolute;
+        inset: -80px;
+        background:
+          radial-gradient(80px 28px at 12% 30%, rgba(255, 255, 255, 0.3), transparent 72%),
+          radial-gradient(110px 34px at 42% 54%, rgba(255, 255, 255, 0.24), transparent 72%),
+          radial-gradient(92px 30px at 78% 38%, rgba(255, 255, 255, 0.28), transparent 72%),
+          repeating-linear-gradient(145deg, transparent 0 28px, rgba(255, 255, 255, 0.16) 29px 31px, transparent 32px 62px);
+        animation: waterMove 10s linear infinite;
+      }
+
+      .pool-band h2 {
+        position: relative;
+        max-width: 820px;
+        margin: 0;
+        padding: 0 20px;
+        font-size: clamp(2rem, 6vw, 5.1rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+        text-wrap: balance;
+      }
+
+      .visit {
+        background:
+          radial-gradient(circle at 92% 0%, rgba(247, 178, 59, 0.28), transparent 20rem),
+          var(--paper);
+      }
+
+      .visit-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 390px);
+        gap: clamp(26px, 6vw, 76px);
+        align-items: center;
+      }
+
+      .info-list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .info-list li {
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(24, 52, 60, 0.14);
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .info-list b {
+        display: block;
+        color: var(--ink);
+      }
+
+      .footer {
+        padding: 30px clamp(18px, 5vw, 64px);
+        color: rgba(255, 255, 255, 0.78);
+        background: var(--ink);
+      }
+
+      .footer-inner {
+        width: min(100%, 1120px);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      @keyframes poolGlow {
+        from { transform: translate3d(0, 0, 0) scale(1); }
+        to { transform: translate3d(-18px, -10px, 0) scale(1.04); }
+      }
+
+      @keyframes shimmer {
+        0%, 100% { transform: translateX(-16px); opacity: 0.72; }
+        50% { transform: translateX(20px); opacity: 1; }
+      }
+
+      @keyframes waterMove {
+        from { background-position: 0 0, 0 0; }
+        to { background-position: 124px 0, 0 0; }
+      }
+
+      @media (max-width: 900px) {
+        .nav {
+          position: absolute;
+          padding-top: 14px;
+        }
+
+        .nav-links a:not(:last-child) {
+          display: none;
+        }
+
+        .hero {
+          min-height: 96vh;
+          padding-top: 96px;
+          padding-bottom: 54px;
+        }
+
+        .hero-inner,
+        .promise-row,
+        .visit-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stamp {
+          min-height: 280px;
+          order: -1;
+        }
+
+        .stamp img {
+          width: min(100%, 230px);
+        }
+
+        .menu-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .button {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .menu-card li {
+          display: grid;
+          gap: 4px;
+        }
+
+        .menu-card span {
+          min-width: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Promesas de un verano</h1>
-      <p>Proyecto web publicado para compartir el material de Promesas de un verano.</p>
-      <a href="menu.pdf">Ver menu</a>
-    </main>
+    <nav class="nav" aria-label="Principal">
+      <div class="brand">Promesas de un verano</div>
+      <div class="nav-links">
+        <a href="#promesa">Promesa</a>
+        <a href="#menu">Menu</a>
+        <a href="#visitanos">Verano</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+          <p class="kicker">Una promesa de sabor, calma y buenos momentos</p>
+          <h1>Promesas de un verano</h1>
+          <p class="hero-copy">
+            Chiringuito, piscina y tardes largas: una carta pensada para comer rico, beber frio y quedarse un rato mas bajo la sombrilla.
+          </p>
+          <div class="hero-actions" aria-label="Acciones principales">
+            <a class="button primary" href="#menu">Ver menu</a>
+            <a class="button secondary" href="menu.pdf">Abrir carta PDF</a>
+          </div>
+        </div>
+
+        <div class="stamp" aria-label="Ilustracion de verano">
+          <img src="Captura%20de%20pantalla%202026-04-27%20a%20las%2018.18.34.png" alt="Ilustracion de playa con sol, palmeras y sombrilla">
+        </div>
+      </div>
+    </header>
+
+    <section class="intro" id="promesa">
+      <div class="section-inner promise-row">
+        <div class="promise-art">
+          <img src="Captura%20de%20pantalla%202026-04-27%20a%20las%2018.19.39.png" alt="Ilustracion de una promesa con las manos">
+        </div>
+
+        <div>
+          <h2 class="section-title">Una web con alma de tarde de piscina</h2>
+          <p class="section-text">
+            He usado tus ilustraciones como sello visual y he construido una experiencia luminosa, facil de leer y optimizada para movil. El estilo mezcla calor, agua, arena y carta de chiringuito sin perder claridad.
+          </p>
+          <div class="pill-row" aria-label="Conceptos de la web">
+            <span class="pill">Piscina</span>
+            <span class="pill">Calor</span>
+            <span class="pill">Chiringuito</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu" id="menu">
+      <div class="section-inner">
+        <h2 class="section-title">Menu de promesas</h2>
+        <p class="section-text">
+          Ensaladas frescas, entrantes para compartir, platos calientes, opciones para peques y bebidas frias para alargar el verano.
+        </p>
+
+        <div class="menu-layout">
+          <article class="menu-card">
+            <h3>Ensaladas</h3>
+            <ul>
+              <li>Tomate raff, bonito y cebolla morada <span>9&euro;</span></li>
+              <li>Queso de cabra <span>10&euro;</span></li>
+              <li>Salmon con miel y mostaza <span>10&euro;</span></li>
+            </ul>
+          </article>
+
+          <article class="menu-card">
+            <h3>Entrantes frios</h3>
+            <ul>
+              <li>Ensaladilla con V <span>9&euro;</span></li>
+              <li>Ibericos con queso de Villarejo <span>9&euro;</span></li>
+              <li>Terrina souto en escabeche <span>9&euro;</span></li>
+            </ul>
+          </article>
+
+          <article class="menu-card">
+            <h3>Para peques</h3>
+            <ul>
+              <li>Nuggets o fingers de pollo <span>9&euro;</span></li>
+              <li>Hamburguesa de pollo <span>6&euro;</span></li>
+              <li>Perrito caliente con patatas <span>4&euro;</span></li>
+            </ul>
+          </article>
+
+          <article class="menu-card">
+            <h3>Calientes</h3>
+            <ul>
+              <li>Queso frito con mermelada <span>9&euro;</span></li>
+              <li>Calamares a la romana <span>12&euro;</span></li>
+              <li>Patatas bravas o alioli <span>8&euro;</span></li>
+              <li>Huevos rotos con jamon <span>13&euro;</span></li>
+              <li>Pulpo con revuelto de patata <span>15&euro;</span></li>
+            </ul>
+          </article>
+
+          <article class="menu-card">
+            <h3>Mas promesas</h3>
+            <ul>
+              <li>Croquetas de jamon <span>10&euro;</span></li>
+              <li>Pinchos morunos, 2 unidades <span>8&euro;</span></li>
+              <li>Solomillo con queso y membrillo <span>15&euro;</span></li>
+              <li>Hamburguesa de vaca 100% <span>14&euro;</span></li>
+              <li>Alpargatas de la casa <span>12&euro;</span></li>
+            </ul>
+          </article>
+
+          <article class="menu-card">
+            <h3>Dulces y bebidas</h3>
+            <ul>
+              <li>Helados, 3 bolas <span>3,50&euro;</span></li>
+              <li>Fruta: pina, melon, sandia <span>4&euro;</span></li>
+              <li>Coulant con vainilla <span>5&euro;</span></li>
+              <li>Refrescos <span>2,50&euro;</span></li>
+              <li>Mojito <span>7&euro;</span></li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="full-menu">
+          <a class="button primary" href="menu.pdf">Ver carta completa en PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="pool-band" aria-label="Ambiente de piscina">
+      <h2>Sombrilla, vaso frio y una tarde sin reloj.</h2>
+    </div>
+
+    <section class="visit" id="visitanos">
+      <div class="section-inner visit-grid">
+        <div>
+          <h2 class="section-title">Hecha para verse bien en el movil</h2>
+          <p class="section-text">
+            Botones grandes, secciones limpias, carta escaneable y efectos suaves que recuerdan al agua sin hacer pesada la pagina.
+          </p>
+        </div>
+
+        <ul class="info-list">
+          <li>
+            <b>Identidad</b>
+            Ilustraciones lineales propias, paleta de sol, agua, coral y arena.
+          </li>
+          <li>
+            <b>Lectura</b>
+            Textos cortos, contraste alto y menu dividido por categorias.
+          </li>
+          <li>
+            <b>Material</b>
+            Incluye enlace directo al PDF original del menu.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>Promesas de un verano</span>
+        <span>Una promesa de sabor, calma y buenos momentos.</span>
+      </div>
+    </footer>
   </body>
 </html>
